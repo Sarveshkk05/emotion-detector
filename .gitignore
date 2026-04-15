@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.pyc
+
+# Model files (if large)
+*.pth
+
+# Dataset (VERY IMPORTANT)
+data/
+*.zip
+
+# Environment
+.env
+
+# OS files
+.DS_Store
+Thumbs.db

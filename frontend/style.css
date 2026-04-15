@@ -1,0 +1,208 @@
+:root {
+    --bg-color: #ffffff;
+    --surface-color: #f3f4f6; /* soft gray */
+    --text-color: #1f2937;
+    --text-secondary: #6b7280;
+    --accent-color: #7F77DD;
+    --border-radius: 16px;
+    --spacing: 24px;
+    --success-color: #10b981;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-color: #111827;
+        --surface-color: #1f2937;
+        --text-color: #f9fafb;
+        --text-secondary: #9ca3af;
+    }
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing);
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.navbar .logo {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.navbar .status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+    font-size: 0.875rem;
+    color: var(--text-color);
+    background: var(--surface-color);
+    padding: 8px 16px;
+    border-radius: 20px;
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    background-color: var(--success-color);
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 var(--spacing);
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.camera-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    background-color: var(--surface-color);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    margin-bottom: var(--spacing);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 450px;
+}
+
+#camera-feed {
+    width: 100%;
+    display: block;
+}
+
+#overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.pill {
+    position: absolute;
+    background-color: var(--accent-color);
+    color: white;
+    padding: 6px 14px;
+    border-radius: 16px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    display: flex;
+    gap: 8px;
+    transform: translate(-50%, -100%);
+    margin-top: -12px;
+    transition: opacity 0.2s;
+    letter-spacing: 0.02em;
+}
+
+.pill.hidden {
+    opacity: 0;
+}
+
+.emotions-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    width: 100%;
+    max-width: 800px;
+    justify-content: center;
+}
+
+.emotion-card {
+    background-color: var(--surface-color);
+    padding: 16px;
+    border-radius: var(--border-radius);
+    flex: 1 1 calc(25% - 16px);
+    min-width: 120px;
+    transition: all 0.2s;
+    border: 2px solid transparent;
+}
+
+@media (max-width: 600px) {
+    .emotion-card {
+        flex: 1 1 calc(50% - 16px);
+    }
+}
+
+.emotion-card.active {
+    border: 2px solid var(--accent-color);
+    background-color: transparent;
+}
+
+.emotion-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.875rem;
+    margin-bottom: 12px;
+    color: var(--text-secondary);
+}
+
+.emotion-card.active .emotion-header {
+    font-weight: 600;
+    color: var(--accent-color);
+}
+
+.emotion-label {
+    text-transform: capitalize;
+}
+
+.progress-track {
+    width: 100%;
+    height: 6px;
+    background-color: rgba(127, 119, 221, 0.15);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background-color: var(--accent-color);
+    width: 0%;
+    transition: width 0.15s ease-out;
+}
+
+.footer {
+    padding: 40px var(--spacing);
+    display: flex;
+    justify-content: center;
+}
+
+.badge {
+    background-color: var(--surface-color);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}

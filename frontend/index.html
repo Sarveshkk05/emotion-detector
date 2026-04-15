@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emotion Detection</title>
+    <meta name="description" content="Real-time emotion detection application interface">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">Emotion Detection</div>
+        <div class="status">
+            <span class="dot"></span>Live
+        </div>
+    </nav>
+    <main class="container">
+        <div class="camera-wrapper">
+            <video id="camera-feed" autoplay playsinline muted></video>
+            <canvas id="overlay"></canvas>
+            <div id="emotion-pill" class="pill hidden">
+                <span id="pill-label"></span>
+                <span id="pill-score"></span>
+            </div>
+        </div>
+        <div class="emotions-bar">
+            <!-- Dynamically populated via JS -->
+        </div>
+    </main>
+    <footer class="footer">
+        <div class="badge">Emotion Detection Model</div>
+    </footer>
+    <script src="app.js"></script>
+</body>
+</html>
