@@ -16,27 +16,50 @@ def run_inference():
     model.to(device)
     model.eval()
 
+    # 🔥 Load face detector
+    face_cascade = cv2.CascadeClassifier(
+        cv2.data.haarcascades + 'haarcascade_frontalface_default.xml'
+    )
+
     webcam = cv2.VideoCapture(0)
+
+    if not webcam.isOpened():
+        print("Error: Cannot access webcam")
+        return
 
     while True:
         ret, frame = webcam.read()
         if not ret:
             break
 
-        rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        img = Image.fromarray(rgb)
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
-        tensor = val_transform(img).unsqueeze(0).to(device)
+        # 🔥 Detect faces
+        faces = face_cascade.detectMultiScale(gray, 1.3, 5)
 
-        with torch.no_grad():
-            out = model(tensor)
-            probs = torch.softmax(out, dim=1)
-            conf, pred = torch.max(probs, 1)
+        for (x, y, w, h) in faces:
+            face = frame[y:y+h, x:x+w]
 
-        label = class_names[pred.item()]
+            rgb = cv2.cvtColor(face, cv2.COLOR_BGR2RGB)
+            img = Image.fromarray(rgb)
 
-        cv2.putText(frame, f"{label} {conf.item():.2f}", (10,30),
-                    cv2.FONT_HERSHEY_SIMPLEX, 1, (0,255,0), 2)
+            tensor = val_transform(img).unsqueeze(0).to(device)
+
+            with torch.no_grad():
+                out = model(tensor)
+                probs = torch.softmax(out, dim=1)
+                conf, pred = torch.max(probs, 1)
+
+            label = class_names[pred.item()]
+
+            # Draw box
+            cv2.rectangle(frame, (x,y), (x+w,y+h), (0,255,0), 2)
+
+            # Show label
+            cv2.putText(frame, f"{label} {conf.item():.2f}",
+                        (x, y-10),
+                        cv2.FONT_HERSHEY_SIMPLEX, 0.9,
+                        (0,255,0), 2)
 
         cv2.imshow("Emotion Detector", frame)
 
